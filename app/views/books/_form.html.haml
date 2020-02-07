@@ -1,0 +1,16 @@
+= form_for @book do |f|
+  - if @book.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@book.errors.count, "error")} prohibited this book from being saved:"
+      %ul
+        - @book.errors.full_messages.each do |message|
+          %li= message
+
+  .field
+    = f.label :title
+    = f.text_field :title
+  .field
+    = f.label :author_refrences
+    = f.collection_select(:author_refrences, Author.all, :id, :first_name, {selcted: f.object.authors.pluck(:id)}, {:multiple => true})
+  .actions
+    = f.submit 'Save'
